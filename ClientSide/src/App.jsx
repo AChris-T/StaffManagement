@@ -1,13 +1,11 @@
-import Routers from './Routers/Routers'
+import Routers from './Routers/Routers';
 
 function App() {
-
   return (
-    <div style={{textAlign:'center', width:'100vw'}}>
-      <h1>Konnect with Ahsan</h1>
+    <div className="w-full max-w-[1440px] mx-auto ">
       <Routers />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

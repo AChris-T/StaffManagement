@@ -3,7 +3,7 @@ import { Home, Login, Payment, Shop, SignUp } from '@/pages';
 
 const Routers = () => {
   return (
-    <div>
+    <div className=''>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />

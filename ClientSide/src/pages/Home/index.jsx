@@ -1,20 +1,14 @@
-import React from 'react'
-import styles from './home.module.css'
-import { Button, Inputs, Modal, ToolTip } from '@/components'
-import { Header, Footer, Navbar } from '@/layout'
-
 const index = () => {
   return (
-    <div className={styles.root}>
-      <Header />
+    <div className="text-red-400">
       Home Pag
-      <br/>
+      <br />
       {/* <Button/>
       <Inputs/>
       <Modal/>
       <ToolTip/> */}
     </div>
-  )
-}
+  );
+};
 
-export default index
+export default index;
