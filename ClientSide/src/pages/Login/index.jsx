@@ -7,7 +7,7 @@ const index = () => {
   return (
     <div className="w-full h-[100vh] bg-white-100 flex justify-center items-center">
       <div className="w-[560px] rounded-[20px] shadow py-9 gap-5 bg-white-200 px-6 ">
-        <div className="flex justify-center items-center flex-col">
+        <div className="flex justify-center items-center flex-col gap-5">
           <div className="flex justify-center flex-col items-center gap-2">
             <img
               src={logo}
