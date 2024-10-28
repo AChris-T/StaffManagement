@@ -28,16 +28,18 @@ const index = () => {
         <form className="mt-9 gap-5 flex flex-col">
           <div className="flex justify-start flex-col gap-3">
             <label className="popins text-base font-normal">Username</label>
-            <select
-              id="role"
-              name="role"
-              className="bg-blue-light px-4 py-4 rounded-xl text-white-300 focus:outline-none"
-            >
-              <option value="">Select your role</option>
-              <option value="male">ICT</option>
-              <option value="female">Registry</option>
-              <option value="female">Management</option>
-            </select>
+            <div className="bg-blue-light px-4 rounded-xl">
+              <select
+                id="role"
+                name="role"
+                className="bg-blue-light w-full cursor-pointer py-4 rounded-xl text-white-300 focus:outline-none"
+              >
+                <option value="">Select your role</option>
+                <option value="male">ICT</option>
+                <option value="female">Registry</option>
+                <option value="female">Management</option>
+              </select>
+            </div>
           </div>
           <div className="flex justify-start flex-col gap-3">
             <label className="popins text-base font-normal">Password</label>
