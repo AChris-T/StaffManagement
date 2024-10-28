@@ -35,7 +35,7 @@ const index = () => {
             >
               <option value="">Select your role</option>
               <option value="male">ICT</option>
-              <option value="female">Registery</option>
+              <option value="female">Registry</option>
               <option value="female">Management</option>
             </select>
           </div>
