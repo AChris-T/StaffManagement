@@ -1,13 +1,10 @@
+import { Main } from '@/layout';
+
 const index = () => {
   return (
-    <div className="text-red-400">
-      Home Pag
-      <br />
-      {/* <Button/>
-      <Inputs/>
-      <Modal/>
-      <ToolTip/> */}
-    </div>
+    <Main>
+        Home Pag
+    </Main>
   );
 };
 

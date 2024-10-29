@@ -28,6 +28,11 @@ export default {
           300: '#94A3B8',
           400: '#EBEEF2',
           500: '#E6E6E6',
+          600: '#F5F5F5',
+        },
+        purple: {
+          100: '#363853',
+          
         },
         blue: {
           light: '#E8F0FE',
