@@ -17,3 +17,10 @@ option {
   background-color: #ffffff; /* White background for options */
   color: #000000; /* Black text color for options */
 }
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+td{
+  border-bottom: 1px solid #00000033;
+}

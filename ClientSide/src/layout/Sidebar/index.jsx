@@ -1,6 +1,7 @@
 import { SideList } from '@/db/data';
 import logo from '../../assets/logo.png';
 import { NavLink } from 'react-router-dom';
+import { RiLogoutCircleRLine } from 'react-icons/ri';
 
 export default function index() {
   return (
@@ -14,18 +15,21 @@ export default function index() {
             <NavLink
               key={index}
               to={items.path}
-              className={({ isActive }) => {
-                `flex flex-col`;
-                isActive;
-              }}
+              className={({ isActive }) =>
+                `flex px-4 py-4 rounded-xl hover:bg-blue-dark hover:text-white-200 items-center outfit gap-3
+                ${isActive ? 'bg-blue-dark text-white-200' : ''}`
+              }
             >
               {items.icons}
-              {items.title}
+              <h3 className="text-base">{items.title}</h3>
             </NavLink>
           ))}
         </div>
       </div>
-      <button>Logout</button>
+      <button className="flex items-center w-full gap-3 px-6">
+        <RiLogoutCircleRLine />
+        Logout
+      </button>
     </div>
   );
 }
