@@ -32,7 +32,7 @@ export default function index({
     return buttons;
   };
   return (
-    <div className="flex mt-4 md:justify-center md:items-center">
+    <div className="flex mt-4 md:mt-0 md:justify-center md:items-center">
       <button
         onClick={onPrevPage}
         disabled={currentPage === 1}

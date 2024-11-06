@@ -5,12 +5,10 @@ import { CiTextAlignCenter } from 'react-icons/ci';
 import { SlCloudUpload } from 'react-icons/sl';
 import Dashtable from '@/utils/hooks/Dashtable';
 import { Pagination } from '..';
-import { Calendar } from 'primereact/calendar';
-import { useState } from 'react';
+
+import user from '../../assets/user.png';
 
 export default function index() {
-  const [date, setDate] = useState(null);
-
   const {
     data,
     totalPages,
@@ -82,12 +80,10 @@ export default function index() {
               <option value="Management">Rank</option>
             </select>
           </div>
-          <button className="border-[#00000033] pl-2 h-[56px] gap-2 w-[150px] border-[0.5px] flex  justify-center items-center  rounded-xl popins font-light text-base">
-            <Calendar
-              id="buttondisplay"
-              value={date}
-              onChange={(e) => setDate(e.value)}
-              showIcon
+          <button className="border-[#00000033]  pl-2 h-[56px] gap-2 w-[150px] border-[0.5px] flex  justify-center items-center  rounded-xl popins font-light text-base">
+            <input
+              type="date"
+              className="w-full pr-3 font-light focus:outline-none outfit"
             />
           </button>
           <button className="border-[#00000033] px-2 h-[56px] w-[150px] border-[0.5px] flex  justify-center items-center gap-4 rounded-xl popins font-light text-base">
@@ -129,8 +125,11 @@ export default function index() {
                 <td className="px-4 text-base font-light text-start popins">
                   {item.Date}
                 </td>
-                <td className="text-base font-light text-start popins">
-                  <h3>{item.Employee}</h3>
+                <td className="text-start popins">
+                  <div className="flex items-center gap-2 text-base font-light ">
+                    <img src={user} alt="" className="w-10 h-10 rounded-full" />
+                    <h3>{item.Employee}</h3>
+                  </div>
                 </td>
                 <td className="text-base font-light text-start popins">
                   {item.Gender}
