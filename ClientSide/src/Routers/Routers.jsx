@@ -1,12 +1,32 @@
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import { Home, Login, Payment, Shop, SignUp } from '@/pages';
+import { Home, Login, Payment, Register, Shop, SignUp } from '@/pages';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AuthProvider } from '@/utils/constants/AuthContext';
+import ProtectedRoute from './ProtectedRoute';
 
 const Routers = () => {
   return (
-    <div className="">
+    <AuthProvider className="">
       <Router>
+        <ToastContainer />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <ProtectedRoute>
+                <Register />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/shop" element={<Shop />} />
@@ -14,7 +34,7 @@ const Routers = () => {
           {/* <Route path="*" element={<ErrorPage />} /> */}
         </Routes>
       </Router>
-    </div>
+    </AuthProvider>
   );
 };
 

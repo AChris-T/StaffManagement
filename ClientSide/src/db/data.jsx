@@ -4,31 +4,48 @@ import { AiOutlineSwap } from 'react-icons/ai';
 import { MdOutlineNotificationsActive } from 'react-icons/md';
 import { CiMedal } from 'react-icons/ci';
 import { GiCandleHolder } from 'react-icons/gi';
+import { PiPenNib } from 'react-icons/pi';
 
+export const Steps = [
+  'Personal Info',
+  'Next of Kin',
+  'Service Record',
+  'Contact Info',
+  'Academic',
+  'Progression',
+  'Deployment',
+  'Digital Files',
+  'Courses',
+  'PM',
+];
 export const SideList = [
   {
     id: 1,
     title: 'Dashboard',
     icons: <RxDashboard className="w-5 h-5" />,
     path: '/',
+    roles: ['ict', 'management', 'registry'],
   },
   {
     id: 2,
-    title: 'Registry',
-    icons: <RxDashboard className="w-5 h-5" />,
-    path: '/registry',
+    title: 'Register',
+    icons: <PiPenNib className="w-5 h-5 rotate-[270deg]" />,
+    path: '/register',
+    roles: ['registry'],
   },
   {
     id: 3,
     title: 'ICT',
     icons: <RxDashboard className="w-5 h-5" />,
     path: '/ict',
+    roles: ['ict'],
   },
   {
     id: 4,
     title: 'Management',
     icons: <RxDashboard className="w-5 h-5" />,
     path: '/management',
+    roles: ['management'],
   },
 ];
 export const CardList = [
@@ -65,11 +82,19 @@ export const CardList = [
     figure: 35,
   },
 ];
-export const statusColors = {
-  Active: 'bg-green-100',
-  Inactive: 'bg-gray-100',
-  Pending: 'bg-yellow-100',
-  Suspended: 'bg-red-100',
+export const getStatusColor = (status) => {
+  switch (status) {
+    case 'Active':
+      return 'text-green-100 border-green-100 bg-green-200';
+    case 'Pending':
+      return 'text-yellow-500 border-yellow-500';
+    case 'Suspended':
+      return 'text-red-300 border-red-300 bg-red-400';
+    case 'Inactive':
+      return 'text-red-300 border-red-300 bg-red-400';
+    default:
+      return 'text-gray-500';
+  }
 };
 export const sampleData = [
   {

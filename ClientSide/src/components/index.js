@@ -6,3 +6,7 @@ export { default as ToolTip } from './ToolTip';
 export { default as Card } from './Card';
 export { default as DashboardTable } from './DashboardTable/Index';
 export { default as Pagination } from './Pagination';
+export { default as FormInfo } from './PersonalInfo';
+export { default as Stepper } from './Stepper';
+export { default as FormSteps } from './FormsSteps';
+export { default as NextOfKinForm } from './NextOfKin';

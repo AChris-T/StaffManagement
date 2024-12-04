@@ -1,9 +1,14 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/rules-of-hooks */
+import Auth from '@/utils/hooks/Auth';
 import logo from '../../assets/logo.png';
 import passwordVisibility from '@/utils/hooks/passwordVisibilty';
+import { toast } from 'react-toastify';
 
 const index = () => {
   const [passwordVisible, setPasswordVisible, Icon, userText, handleChange] =
     passwordVisibility();
+  const { formData, loading, handleLoginChange, handleSubmit } = Auth();
 
   return (
     <div className="w-full h-[100vh] bg-white-100 flex justify-center items-center">
@@ -26,36 +31,39 @@ const index = () => {
             </h4>
           </div>
         </div>
-        <form className="flex flex-col gap-5 mt-9">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-9">
           <div className="flex flex-col justify-start gap-3">
             <label className="text-base font-normal popins">Username</label>
             <div className="px-2 pr-4 bg-blue-light rounded-xl">
-              <select
-                id="role"
-                values={userText}
-                onChange={handleChange}
-                placeholder="Select your role"
-                name="role"
-                className={`border-none w-full popins px-2   rounded-xl py-4 bg-blue-light outline-none ${
+              <input
+                defaultValue={formData.email}
+                onChange={handleLoginChange}
+                name="email"
+                type="email"
+                className={`border w-full popins px-4 rounded-xl py-4 bg-transparent outline-none ${
                   userText ? 'text-black-default' : ''
                 }`}
-              >
-                <option value="" className="">
-                  Select your role
-                </option>
-                <option value="ICT">ICT</option>
-                <option value="Registry">Registry</option>
-                <option value="Management">Management</option>
-              </select>
+              />
             </div>
           </div>
           <div className="flex flex-col justify-start gap-3">
             <label className="text-base font-normal popins">Password</label>
             <div className="relative w-full bg-blue-light rounded-xl">
-              <input
+              {/*  <input
                 type={passwordVisible ? 'text' : 'password'}
                 values={handleChange}
                 onChange={handleChange}
+                placeholder="Enter your Password"
+                className={`border w-full popins px-4 rounded-xl py-4 bg-blue-light outline-none ${
+                  userText ? 'text-black-default' : ''
+                }`} 
+              />
+                */}
+              <input
+                type={passwordVisible ? 'text' : 'password'}
+                defaultValue={formData.password}
+                name="password"
+                onChange={handleLoginChange}
                 placeholder="Enter your Password"
                 className={`border w-full popins px-4 rounded-xl py-4 bg-blue-light outline-none ${
                   userText ? 'text-black-default' : ''
@@ -81,8 +89,12 @@ const index = () => {
               Forget Password?
             </h3>
           </div>
-          <button className="py-4 text-base font-bold bg-blue-100 rounded-xl popins text-white-200">
-            Login
+          <button
+            type="submit"
+            disabled={loading}
+            className="py-4 text-base font-bold bg-blue-100 rounded-xl popins text-white-200"
+          >
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
       </div>

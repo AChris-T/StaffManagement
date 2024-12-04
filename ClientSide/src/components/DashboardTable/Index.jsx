@@ -5,8 +5,8 @@ import { CiTextAlignCenter } from 'react-icons/ci';
 import { SlCloudUpload } from 'react-icons/sl';
 import Dashtable from '@/utils/hooks/Dashtable';
 import { Pagination } from '..';
-
 import user from '../../assets/user.png';
+import { getStatusColor } from '@/db/data';
 
 export default function index() {
   const {
@@ -108,8 +108,8 @@ export default function index() {
               <th className="text-start w-[200px] text-base popins font-normal">
                 Service Number
               </th>
-              <th className="text-start w-[150px] text-base popins font-normal">
-                Status
+              <th className="text-start  w-[200px] text-base popins font-normal">
+                <h3 className="text-center w-[120px]">Status</h3>
               </th>
               <th className="rounded-tr-lg text-start w-[200px] text-base popins font-normal ">
                 Rank
@@ -137,8 +137,14 @@ export default function index() {
                 <td className="text-base font-light text-start popins">
                   {item.ServiceNumber}
                 </td>
-                <td className="text-base font-light text-start popins">
-                  {item.status}
+                <td className="text-base font-ligh text-start popins">
+                  <h3
+                    className={`border-[1px] ${getStatusColor(
+                      item.status
+                    )} border-black-400 py-2 rounded-lg w-[120px] text-center`}
+                  >
+                    {item.status}
+                  </h3>
                 </td>
                 <td className="text-base font-light text-start popins">
                   {item.rank}
