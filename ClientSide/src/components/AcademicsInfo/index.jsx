@@ -1,16 +1,24 @@
 /* eslint-disable react/prop-types */
-import { Formik, FieldArray } from 'formik';
+import { Formik, FieldArray, Field } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { nextofKinMutation } from '@/utils/hooks/DashboardMutation';
 import { LuPlusCircle } from 'react-icons/lu';
+import { academicRecordMutation } from '@/utils/hooks/DashboardMutation';
+
+const getYears = () => {
+  const currentYear = new Date().getFullYear();
+  return Array.from({ length: currentYear - 1985 + 1 }, (_, i) => 1985 + i);
+};
+
+const years = getYears();
 
 export default function Index({ onNext }) {
-  const { mutate, isLoading } = nextofKinMutation();
+  const { mutate, isLoading } = academicRecordMutation();
   const userId = localStorage.getItem('userid');
+
   console.log(userId);
   const validationSchema = Yup.object().shape({
-    nextOfKin: Yup.array().of(
+    /* AcedemicRecord: Yup.array().of(
       Yup.object().shape({
         firstName: Yup.string()
           .required('First name is required')
@@ -25,28 +33,22 @@ export default function Index({ onNext }) {
           'Residential address is required'
         ),
         relationship: Yup.string().required('Relationship is required'),
-        phoneNumber: Yup.string()
-          .matches(
-            /^0(70|80|81|90|91|701|702|703|704|705|706|707|708|709|802|803|804|805|806|807|808|809|810|811|812|813|814|815|816|817|818|819|909|901|902|903|904|905|906|907|908|915|916|917|918)\d{7}$/,
-            'Invalid Nigerian phone number'
-          )
-          .required('Phone number is required'),
+        phoneNumber: Yup.string().required('Phone number is required'),
       })
-    ),
+    ), */
   });
 
   return (
     <Formik
       initialValues={{
-        id: '', // Example static ID
-        nextOfKin: [
+        id: '',
+        AcedemicRecord: [
           {
-            firstName: '',
-            lastName: '',
-            otherNames: '',
-            residentialAddress: '',
-            relationship: '',
-            phoneNumber: '',
+            qualification: '',
+            institutionAttended: '',
+            grade: '',
+            specialization: '',
+            year: '',
           },
         ],
       }}
@@ -54,13 +56,13 @@ export default function Index({ onNext }) {
       onSubmit={(values, { resetForm }) => {
         const payload = {
           id: userId,
-          nextOfKin: values.nextOfKin,
+          AcedemicRecord: values.AcedemicRecord,
         };
         console.log(payload);
 
         mutate(payload, {
           onSuccess: () => {
-            toast.success('Next of Kin details submitted successfully!');
+            toast.success('Acedemic Record submitted successfully!');
             onNext();
             resetForm(); // Reset form on success
           },
@@ -73,130 +75,56 @@ export default function Index({ onNext }) {
     >
       {(formik) => (
         <form onSubmit={formik.handleSubmit} className="py-6 mx-auto popins">
-          <h3 className="mb-8 text-2xl font-semibold text-black-700">
-            Next of Kin Information
-          </h3>
-
-          <FieldArray name="nextOfKin">
+          <FieldArray name="AcedemicRecord">
             {({ push, remove }) => (
               <div>
-                {formik.values.nextOfKin.map((_, index) => (
+                {formik.values.AcedemicRecord.map((_, index) => (
                   <div key={index} className="p-4 mb-6 ">
                     <div className="flex items-center justify-between mb-10">
-                      <h4 className="mb-4 text-lg font-semibold">
-                        Next of Kin
-                      </h4>
-                      {index >= 1 ? null : (
-                        <button
-                          onClick={() =>
-                            push({
-                              firstName: '',
-                              lastName: '',
-                              otherNames: '',
-                              residentialAddress: '',
-                              relationship: '',
-                              phoneNumber: '',
-                            })
-                          }
-                          className="flex items-center gap-2 px-5 py-4 text-xs font-medium border-[1px]  border-blue-100 rounded-xl text-blue-100 md:text-base md:shadow-2xl"
-                        >
-                          <LuPlusCircle className="text-[24px]" />
-                          <p className="hidden md:flex"> Add Next of Kin</p>
-                        </button>
-                      )}
+                      <h3 className="text-2xl font-semibold text-black-700">
+                        Academic qualification{' '}
+                      </h3>
+                      <button
+                        onClick={() =>
+                          push({
+                            qualification: '',
+                            institutionAttended: '',
+                            grade: '',
+                            specialization: '',
+                            year: '',
+                          })
+                        }
+                        className="flex items-center gap-2 px-5 py-4 text-xs font-medium border-[1px]  border-blue-100 rounded-xl text-blue-100 md:text-base md:shadow-2xl"
+                      >
+                        <LuPlusCircle className="text-[24px]" />
+                        <p className="hidden md:flex"> Add New</p>
+                      </button>
                     </div>
                     {/* First Name */}
                     <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
                       <div className="w-full mb-3">
                         <label className="block mb-2 text-sm font-normal text-black-700">
-                          First Name
+                          Qualification
                         </label>
                         <input
                           type="text"
-                          name={`nextOfKin[${index}].firstName`}
-                          value={formik.values.nextOfKin[index].firstName}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          className="w-full px-4 py-3 bg-blue-300 focus:outline-none"
-                          placeholder="Enter your first name"
-                        />
-                        {formik.touched.nextOfKin?.[index]?.firstName &&
-                          formik.errors.nextOfKin?.[index]?.firstName && (
-                            <div className="text-sm text-red-500">
-                              {formik.errors.nextOfKin[index].firstName}
-                            </div>
-                          )}
-                      </div>
-
-                      {/* Last Name */}
-                      <div className="w-full mb-3">
-                        <label className="block mb-2 text-sm font-normal text-black-700">
-                          Last Name
-                        </label>
-                        <input
-                          type="text"
-                          name={`nextOfKin[${index}].lastName`}
-                          value={formik.values.nextOfKin[index].lastName}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          className="w-full px-4 py-3 bg-blue-300 focus:outline-none"
-                          placeholder="Enter your first name"
-                        />
-                        {formik.touched.nextOfKin?.[index]?.lastName &&
-                          formik.errors.nextOfKin?.[index]?.lastName && (
-                            <div className="text-sm text-red-500">
-                              {formik.errors.nextOfKin[index].lastName}
-                            </div>
-                          )}
-                      </div>
-
-                      {/* Add more fields as necessary */}
-                      {/* Relationship */}
-                      <div className="w-full mb-3">
-                        <label className="block mb-2 text-sm font-normal text-black-700">
-                          other Names
-                        </label>
-                        <input
-                          type="text"
-                          name={`nextOfKin[${index}].otherNames`}
-                          value={formik.values.nextOfKin[index].otherNames}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          className="w-full px-4 py-3 bg-blue-300 focus:outline-none"
-                          placeholder="Enter your first name"
-                        />
-                        {formik.touched.nextOfKin?.[index]?.otherNames &&
-                          formik.errors.nextOfKin?.[index]?.otherNames && (
-                            <div className="text-sm text-red-500">
-                              {formik.errors.nextOfKin[index].otherNames}
-                            </div>
-                          )}
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-                      <div className="w-full mb-3">
-                        <label className="block mb-2 text-sm font-normal text-black-700">
-                          Residential Address
-                        </label>
-                        <input
-                          type="text"
-                          name={`nextOfKin[${index}].residentialAddress`}
+                          name={`AcedemicRecord[${index}].qualification`}
                           value={
-                            formik.values.nextOfKin[index].residentialAddress
+                            formik.values.AcedemicRecord[index].qualification
                           }
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           className="w-full px-4 py-3 bg-blue-300 focus:outline-none"
                           placeholder="Enter your first name"
                         />
-                        {formik.touched.nextOfKin?.[index]
-                          ?.residentialAddress &&
-                          formik.errors.nextOfKin?.[index]
-                            ?.residentialAddress && (
+                        {formik.touched.AcedemicRecord?.[index]
+                          ?.qualification &&
+                          formik.errors.AcedemicRecord?.[index]
+                            ?.qualification && (
                             <div className="text-sm text-red-500">
                               {
-                                formik.errors.nextOfKin[index]
-                                  .residentialAddress
+                                formik.errors.AcedemicRecord[index]
+                                  .qualification
                               }
                             </div>
                           )}
@@ -205,21 +133,29 @@ export default function Index({ onNext }) {
                       {/* Last Name */}
                       <div className="w-full mb-3">
                         <label className="block mb-2 text-sm font-normal text-black-700">
-                          Phone Number
+                          Institution attended{' '}
                         </label>
                         <input
-                          type="phoneNumber"
-                          name={`nextOfKin[${index}].phoneNumber`}
-                          value={formik.values.nextOfKin[index].phoneNumber}
+                          type="text"
+                          name={`AcedemicRecord[${index}].institutionAttended`}
+                          value={
+                            formik.values.AcedemicRecord[index]
+                              .institutionAttended
+                          }
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           className="w-full px-4 py-3 bg-blue-300 focus:outline-none"
                           placeholder="Enter your first name"
                         />
-                        {formik.touched.nextOfKin?.[index]?.phoneNumber &&
-                          formik.errors.nextOfKin?.[index]?.phoneNumber && (
+                        {formik.touched.AcedemicRecord?.[index]
+                          ?.institutionAttended &&
+                          formik.errors.AcedemicRecord?.[index]
+                            ?.institutionAttended && (
                             <div className="text-sm text-red-500">
-                              {formik.errors.nextOfKin[index].phoneNumber}
+                              {
+                                formik.errors.AcedemicRecord[index]
+                                  .institutionAttended
+                              }
                             </div>
                           )}
                       </div>
@@ -228,32 +164,92 @@ export default function Index({ onNext }) {
                       {/* Relationship */}
                       <div className="w-full mb-3">
                         <label className="block mb-2 text-sm font-normal text-black-700">
-                          Relationship
+                          Grade
                         </label>
                         <input
                           type="text"
-                          name={`nextOfKin[${index}].relationship`}
-                          value={formik.values.nextOfKin[index].relationship}
+                          name={`AcedemicRecord[${index}].grade`}
+                          value={formik.values.AcedemicRecord[index].grade}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           className="w-full px-4 py-3 bg-blue-300 focus:outline-none"
                           placeholder="Enter your first name"
                         />
-                        {formik.touched.nextOfKin?.[index]?.relationship &&
-                          formik.errors.nextOfKin?.[index]?.relationship && (
+                        {formik.touched.AcedemicRecord?.[index]?.grade &&
+                          formik.errors.AcedemicRecord?.[index]?.grade && (
                             <div className="text-sm text-red-500">
-                              {formik.errors.nextOfKin[index].relationship}
+                              {formik.errors.AcedemicRecord[index].grade}
                             </div>
                           )}
                       </div>
                     </div>
-                    {/* Remove Button */}
+                    <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
+                      <div className="w-full mb-3">
+                        <label className="block mb-2 text-sm font-normal text-black-700">
+                          Specialization
+                        </label>
+                        <input
+                          type="text"
+                          name={`AcedemicRecord[${index}].specialization`}
+                          value={
+                            formik.values.AcedemicRecord[index].specialization
+                          }
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          className="w-full px-4 py-3 bg-blue-300 focus:outline-none"
+                          placeholder="Enter your first name"
+                        />
+                        {formik.touched.AcedemicRecord?.[index]
+                          ?.specialization &&
+                          formik.errors.AcedemicRecord?.[index]
+                            ?.specialization && (
+                            <div className="text-sm text-red-500">
+                              {
+                                formik.errors.AcedemicRecord[index]
+                                  .specialization
+                              }
+                            </div>
+                          )}
+                      </div>
+
+                      {/* Relationship */}
+                      <div className="w-full mb-3">
+                        <label className="block mb-2 text-sm font-normal text-black-700">
+                          Year
+                        </label>
+                        <div>
+                          <Field
+                            as="select"
+                            type="text"
+                            name={`AcedemicRecord[${index}].year`}
+                            value={formik.values.AcedemicRecord[index].year}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            //name="year"
+                            className="w-full px-4 py-3 bg-blue-300 focus:outline-none"
+                          >
+                            <option value="">-- Select Year --</option>
+                            {years.map((year) => (
+                              <option key={year} value={year}>
+                                {year}
+                              </option>
+                            ))}
+                          </Field>
+                        </div>
+                        {formik.touched.AcedemicRecord?.[index]?.year &&
+                          formik.errors.AcedemicRecord?.[index]?.year && (
+                            <div className="text-sm text-red-500">
+                              {formik.errors.AcedemicRecord[index].year}
+                            </div>
+                          )}
+                      </div>
+                    </div>
                     {index === 0 ? null : (
                       <button
                         type="button"
                         className="p-2 mt-2 text-white bg-red-500 rounded"
                         onClick={() => remove(index)}
-                        disabled={formik.values.nextOfKin.length === 1}
+                        disabled={formik.values.AcedemicRecord.length === 1}
                       >
                         Remove
                       </button>
@@ -268,14 +264,13 @@ export default function Index({ onNext }) {
 
           {/* Submit Button */}
           <div className="flex items-center justify-center w-full gap-3 mt-10">
-            <a
-              href="#"
-              disabled
-              className={`w-[250px] cursor-not-allowed flex justify-center text-white-800 border-[2px] border-white-800 items-center py-2 px-4 bg-transparent text-white rounded-lg 
+            <button
+              type="submit"
+              className={`w-[250px] flex justify-center text-white-100 items-center py-2 px-4 bg-blue-dark text-white rounded-lg 
         }`}
             >
               Previous
-            </a>
+            </button>
             <button
               type="submit"
               className={`w-[250px] flex justify-center text-white-100 items-center py-2 px-4 bg-blue-dark text-white rounded-lg 

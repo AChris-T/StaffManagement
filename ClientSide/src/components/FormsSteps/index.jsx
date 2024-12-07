@@ -1,6 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from 'react';
-import { FormInfo, NextOfKinForm, Stepper } from '..';
+import {
+  AcademicsInfo,
+  ContactInfo,
+  CoursesInfo,
+  DeploymentRecord,
+  DigitalInfo,
+  FormInfo,
+  NextOfKinForm,
+  PM,
+  ProgressionInfo,
+  ServiceRecord,
+  Stepper,
+} from '..';
 
 export default function index() {
   const steps = [
@@ -46,6 +58,22 @@ export default function index() {
       case 2:
         return <NextOfKinForm onNext={handleNextStep} />;
       // Add cases for other steps
+      case 3:
+        return <ServiceRecord onNext={handleNextStep} />;
+      case 4:
+        return <ContactInfo onNext={handleNextStep} />;
+      case 5:
+        return <AcademicsInfo onNext={handleNextStep} />;
+      case 6:
+        return <ProgressionInfo onNext={handleNextStep} />;
+      case 7:
+        return <DeploymentRecord onNext={handleNextStep} />;
+      case 8:
+        return <DigitalInfo onNext={handleNextStep} />;
+      case 9:
+        return <CoursesInfo onNext={handleNextStep} />;
+      case 10:
+        return <PM onNext={handleNextStep} />;
       default:
         return <h2>All steps completed!</h2>;
     }

@@ -9,8 +9,19 @@ import {
   useUserMutation,
 } from '@/utils/hooks/DashboardMutation';
 
-const bloodGroups = ['A', 'A', 'B', 'B', 'AB', 'AB', 'O', 'O', 'O', 'AB'];
-const tribalMarks = ['none', 'Yes', 'No', 'Not Specified'];
+const bloodGroups = [
+  'A+',
+  'A-',
+  'B+',
+  'B-',
+  'AB+',
+  'AB-',
+  'O+',
+  'O-',
+  'O+',
+  'AB',
+];
+const tribalMarks = ['None', 'Yes', 'No', 'Not Specified'];
 const titles = ['Mr.', 'Mrs.', 'Dr.', 'Miss', 'Prof.'];
 
 const disabilityStatuses = [
@@ -85,8 +96,8 @@ export default function index({ onNext }) {
       otherNames: Yup.string()
         .required('lastname is required')
         .min(3, 'lastname must be at least 3 characters'),
-      /*       image: Yup.mixed().required('upload your image'),
-       */ dateOfBirth: Yup.date()
+      image: Yup.mixed().required('upload your image'),
+      dateOfBirth: Yup.date()
         .nullable()
         .required('Date of Birth is required')
         .test('is-18', 'You must be at least 18 years old', (value) => {
@@ -103,6 +114,9 @@ export default function index({ onNext }) {
       bloodGroup: Yup.string()
         .oneOf(bloodGroups, 'Invalid blood group')
         .required('Blood group is required'),
+      maritalStatus: Yup.string()
+        .oneOf(maritalStatuses, 'Invalid marital status')
+        .required('marital Status is required'),
       genotype: Yup.string()
         .oneOf(genotypes, 'Invalid genotype')
         .required('genotype is required'),
@@ -142,7 +156,7 @@ export default function index({ onNext }) {
     }),
     onSubmit: (values, { resetForm }) => {
       console.log('hello');
-      console.log(values.image);
+      console.log('image', values.image);
 
       const payload = {
         personalInformation: {
@@ -151,8 +165,8 @@ export default function index({ onNext }) {
           otherNames: values.otherNames,
           dateOfBirth: values.dateOfBirth,
           bloodGroup: values.bloodGroup,
-          genotype: 'AS',
-          maritalStatus: 'Single',
+          genotype: values.genotype,
+          maritalStatus: values.maritalStatus,
           weight: values.weight,
           height: values.height,
           maidenName: values.maidenName,
@@ -162,7 +176,7 @@ export default function index({ onNext }) {
           tribalMark: values.tribalMark,
           homeTown: values.homeTown,
           title: values.title,
-          image: 'htkfitf',
+          image: values.image,
         },
       };
 
@@ -255,6 +269,11 @@ export default function index({ onNext }) {
             className="w-full px-4 py-3 bg-blue-300 text-white-800 focus:outline-none"
             placeholder="Enter your other names"
           />
+          {formik.touched.otherNames && formik.errors.otherNames && (
+            <div className="mt-1 text-sm text-red-500">
+              {formik.errors.otherNames}
+            </div>
+          )}
         </div>
       </div>
       <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
@@ -350,6 +369,13 @@ export default function index({ onNext }) {
           </label>
           <div className="w-full px-4 bg-blue-300 focus:outline-none">
             <select
+              id="maritalStatus"
+              name="maritalStatus"
+              onChange={(e) => {
+                formik.handleChange(e);
+              }}
+              onBlur={formik.handleBlur}
+              value={formik.values.maritalStatus}
               className="w-full py-3 bg-blue-300 text-white-800 focus:outline-none"
               placeholder="Enter your first name"
             >
@@ -361,6 +387,11 @@ export default function index({ onNext }) {
               ))}
             </select>
           </div>
+          {formik.touched.maritalStatus && formik.errors.maritalStatus && (
+            <div className="mt-1 text-sm text-red-500">
+              {formik.errors.maritalStatus}
+            </div>
+          )}
         </div>
         <div className="w-full mb-4">
           <label className="block mb-2 text-sm font-normal text-black-700">
@@ -510,6 +541,12 @@ export default function index({ onNext }) {
               ))}
             </select>
           </div>
+          {formik.touched.physicalDisability &&
+            formik.errors.physicalDisability && (
+              <div className="mt-1 text-sm text-red-500">
+                {formik.errors.physicalDisability}
+              </div>
+            )}
         </div>
         <div className="w-full mb-4">
           <label className="block mb-2 text-sm font-normal text-black-700">
@@ -535,12 +572,11 @@ export default function index({ onNext }) {
               ))}
             </select>
           </div>
-          {formik.touched.physicalDisability &&
-            formik.errors.physicalDisability && (
-              <div className="mt-1 text-sm text-red-500">
-                {formik.errors.physicalDisability}
-              </div>
-            )}
+          {formik.touched.tribalMark && formik.errors.tribalMark && (
+            <div className="mt-1 text-sm text-red-500">
+              {formik.errors.tribalMark}
+            </div>
+          )}
         </div>
         <div className="w-full mb-4">
           <label className="block mb-2 text-sm font-normal text-black-700">
@@ -601,59 +637,50 @@ export default function index({ onNext }) {
             Upload Image
           </label>
           <div className="w-full px-4 bg-blue-300 focus:outline-none">
-            {formik.values.image && (
-              <a
-                href={formik.values.image}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-3"
-              >
-                <img
-                  src={formik.values.image}
-                  alt="Preview"
-                  className="object-cover w-32 h-32 border rounded"
-                />
-              </a>
-            )}
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChanges}
               className="w-full px-4 py-3 bg-blue-300 text-white-800 focus:outline-none"
             />
-            {formik.errors.image && (
-              <div className="mt-1 text-sm text-red-500">
-                {formik.errors.image}
-              </div>
-            )}
           </div>
+          {formik.errors.image && (
+            <div className="mt-1 text-sm text-red-500">
+              {formik.errors.image}
+            </div>
+          )}
         </div>
 
-        {imagePreview && (
-          <div>
+        {formik.values.image && (
+          <a
+            href={formik.values.image}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-3"
+          >
             <img
-              src={imagePreview}
+              src={formik.values.image}
               alt="Preview"
-              style={{ width: '200px', height: 'auto', marginTop: '10px' }}
+              className="object-cover w-32 h-32 border rounded"
             />
-          </div>
+          </a>
         )}
       </div>
       <div className="flex items-center justify-center w-full gap-3 mt-10">
         <button
           type="submit"
           disabled
-          className={`w-[250px] flex justify-center cursor-not-allowed items-center py-2 px-4 border-white-800 border-[1px] text-white-800 rounded-lg 
+          className={`w-[250px] flex  justify-center text-white-800 items-center py-2 px-4 font-bold border-[2px] border-white-800 text-white rounded-lg 
         }`}
         >
           Previous
         </button>
         <button
           type="submit"
-          className={`w-[250px] flex justify-center text-white-100 items-center py-2 px-4 bg-blue-dark text-white rounded-lg 
+          className={`w-[250px] flex justify-center font-bold text-white-200 items-center py-2 px-4 bg-blue-dark text-white rounded-lg 
         }`}
         >
-          Next
+          {isLoading ? 'submiting...' : 'Next'}
         </button>
       </div>
     </form>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { CIVIL_DEFENSE_API } from '@/utils/constants/Api';
+import { toast } from 'react-toastify';
 
 const getToken = () => {
   const userCookie = Cookies.get('user');
@@ -81,6 +82,224 @@ export const NextOfKin = async (formData) => {
   }
 };
 
+export const CoursesInform = async (formData) => {
+  try {
+    const token = getToken('token');
+
+    const response = await axios.post(
+      `${CIVIL_DEFENSE_API}/user/registry/upload/courses-attended`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log('creator', response.data.data.id);
+    return response.data; // Axios already parses the JSON response
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `Error: ${error.response.status} - ${
+          error.response.data.message || error.message
+        }`
+      );
+    } else if (error.request) {
+      throw new Error(`Error: No response received from server`);
+    } else {
+      throw new Error(`Error: ${error.message}`);
+    }
+  }
+};
+
+export const PMInform = async (formData) => {
+  try {
+    const token = getToken('token');
+
+    const response = await axios.post(
+      `${CIVIL_DEFENSE_API}/user/registry/upload/professional-membership`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log('creator', response.data.data.id);
+    return response.data; // Axios already parses the JSON response
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `Error: ${error.response.status} - ${
+          error.response.data.message || error.message
+        }`
+      );
+    } else if (error.request) {
+      throw new Error(`Error: No response received from server`);
+    } else {
+      throw new Error(`Error: ${error.message}`);
+    }
+  }
+};
+//service Record
+
+export const ServiceRecord = async (formData) => {
+  try {
+    const token = getToken('token');
+
+    const response = await axios.post(
+      `${CIVIL_DEFENSE_API}/user/registry/upload/next-of-kin`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log('creator', response.data.data.id);
+    return response.data; // Axios already parses the JSON response
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `Error: ${error.response.status} - ${
+          error.response.data.message || error.message
+        }`
+      );
+    } else if (error.request) {
+      throw new Error(`Error: No response received from server`);
+    } else {
+      throw new Error(`Error: ${error.message}`);
+    }
+  }
+};
+
+export const AcademicRecord = async (formData) => {
+  try {
+    const token = getToken('token');
+
+    const response = await axios.post(
+      `${CIVIL_DEFENSE_API}/user/registry/upload/academic-qualifications`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log('creator', response.data.data.id);
+    return response.data; // Axios already parses the JSON response
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `Error: ${error.response.status} - ${
+          error.response.data.message || error.message
+        }`
+      );
+    } else if (error.request) {
+      throw new Error(`Error: No response received from server`);
+    } else {
+      throw new Error(`Error: ${error.message}`);
+    }
+  }
+};
+export const ProgressionRecord = async (formData) => {
+  try {
+    const token = getToken('token');
+
+    const response = await axios.post(
+      `${CIVIL_DEFENSE_API}/user/registry/upload/progression`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log('creator', response.data.data.id);
+    return response.data; // Axios already parses the JSON response
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `Error: ${error.response.status} - ${
+          error.response.data.message || error.message
+        }`
+      );
+    } else if (error.request) {
+      throw new Error(`Error: No response received from server`);
+    } else {
+      throw new Error(`Error: ${error.message}`);
+    }
+  }
+};
+// deployment
+export const DeploymentRecord = async (formData) => {
+  try {
+    const token = getToken('token');
+
+    const response = await axios.post(
+      `${CIVIL_DEFENSE_API}/user/registry/upload/deployment-record`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log('creator', response.data.data.id);
+    return response.data; // Axios already parses the JSON response
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `Error: ${error.response.status} - ${
+          error.response.data.message || error.message
+        }`
+      );
+    } else if (error.request) {
+      throw new Error(`Error: No response received from server`);
+    } else {
+      throw new Error(`Error: ${error.message}`);
+    }
+  }
+};
+
+//digital record
+export const DigitalRecord = async (formData) => {
+  try {
+    const token = getToken('token');
+
+    const response = await axios.post(
+      `${CIVIL_DEFENSE_API}/user/registry/upload/digital-files`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log('creator', response.data.data.id);
+    return response.data; // Axios already parses the JSON response
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `Error: ${error.response.status} - ${
+          error.response.data.message || error.message
+        }`
+      );
+    } else if (error.request) {
+      throw new Error(`Error: No response received from server`);
+    } else {
+      throw new Error(`Error: ${error.message}`);
+    }
+  }
+};
+
 export const uploadFile = async (file) => {
   const url = `${CIVIL_DEFENSE_API}/user/upload`;
 
@@ -113,5 +332,22 @@ export const uploadFile = async (file) => {
       // Other errors
       throw new Error(`Error: ${error.message}`);
     }
+  }
+};
+export const fetchLocalGovernment = async (state) => {
+  const url = `${CIVIL_DEFENSE_API}/user/lga?state=${state}`;
+  const token = getToken('token');
+
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data || [];
+  } catch (error) {
+    toast.error('Error fetching local governments:', error);
+    return [];
   }
 };
